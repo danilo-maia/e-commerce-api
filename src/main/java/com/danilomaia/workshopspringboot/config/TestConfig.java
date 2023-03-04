@@ -1,14 +1,8 @@
 package com.danilomaia.workshopspringboot.config;
 
-import com.danilomaia.workshopspringboot.entities.Category;
-import com.danilomaia.workshopspringboot.entities.Order;
-import com.danilomaia.workshopspringboot.entities.Product;
-import com.danilomaia.workshopspringboot.entities.User;
+import com.danilomaia.workshopspringboot.entities.*;
 import com.danilomaia.workshopspringboot.entities.enums.OrderStatus;
-import com.danilomaia.workshopspringboot.repositories.CategoryRepository;
-import com.danilomaia.workshopspringboot.repositories.OrderRepository;
-import com.danilomaia.workshopspringboot.repositories.ProductRepository;
-import com.danilomaia.workshopspringboot.repositories.UserRepository;
+import com.danilomaia.workshopspringboot.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,16 +18,20 @@ public class TestConfig implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
+    private final OrderItemRepository orderItemRepository;
+
     public TestConfig(
             UserRepository userRepository,
             OrderRepository orderRepository,
             CategoryRepository categoryRepository,
-            ProductRepository productRepository
+            ProductRepository productRepository,
+            OrderItemRepository orderItemRepository
     ) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -47,8 +45,6 @@ public class TestConfig implements CommandLineRunner {
         Category cat1 = new Category(null, "Electronics");
         Category cat2 = new Category(null, "Books");
         Category cat3 = new Category(null, "Computers");
-
-
 
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
@@ -69,10 +65,15 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.PAID, u2);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
-
-
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
 
