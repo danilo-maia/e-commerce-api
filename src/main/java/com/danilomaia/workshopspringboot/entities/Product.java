@@ -1,5 +1,6 @@
 package com.danilomaia.workshopspringboot.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -24,6 +25,10 @@ public class Product {
     )
     private final Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    @JsonIgnore
+    private final Set<OrderItem> orders = new HashSet<>();
+
     public Product() {
     }
 
@@ -33,6 +38,14 @@ public class Product {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Set<Order> getOrders(){
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : orders){
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
     public Long getId() {
