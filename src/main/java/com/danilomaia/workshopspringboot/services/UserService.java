@@ -2,6 +2,7 @@ package com.danilomaia.workshopspringboot.services;
 
 import com.danilomaia.workshopspringboot.entities.User;
 import com.danilomaia.workshopspringboot.repositories.UserRepository;
+import com.danilomaia.workshopspringboot.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj){
