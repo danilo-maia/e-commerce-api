@@ -2,6 +2,10 @@ package com.danilomaia.workshopspringboot.resources;
 
 import com.danilomaia.workshopspringboot.entities.User;
 import com.danilomaia.workshopspringboot.services.UserService;
+import com.danilomaia.workshopspringboot.services.exceptions.DatabaseException;
+import com.danilomaia.workshopspringboot.services.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

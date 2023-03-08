@@ -2,7 +2,10 @@ package com.danilomaia.workshopspringboot.services;
 
 import com.danilomaia.workshopspringboot.entities.User;
 import com.danilomaia.workshopspringboot.repositories.UserRepository;
+import com.danilomaia.workshopspringboot.services.exceptions.DatabaseException;
 import com.danilomaia.workshopspringboot.services.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +33,14 @@ public class UserService {
     }
 
     public void delete(Long id){
-        repository.deleteById(id);
+        if (repository.findById(id).isEmpty())
+            throw new ResourceNotFoundException(id);
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public User update(Long id, User obj){
