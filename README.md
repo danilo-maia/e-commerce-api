@@ -2,8 +2,7 @@
 
 # About the Project:
 
-O projeto trabalha com o gerenciamento de um e-commerce através de um sistema Backend que disponibiliza uma API Restful para o CRUD de usuários, que podem fazer pedidos, pedidos esses que possuem produtos e produtos esses que pertecem a uma categoria.
-Este projeto foi feito a partir de um projeto do curso do Nelio Alves.
+The project deals with the management of an e-commerce through a backend system that provides a Restful API for the CRUD of users, who can place orders, and these orders have products, which belong to a category. This project was developed based on a course project by Nelio Alves.
 
 # Technologies Used:
 
